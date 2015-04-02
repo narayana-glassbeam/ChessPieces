@@ -1,134 +1,192 @@
 package chesspieces;
 
 import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class ChessPieces
 {
-	private static int size;
-	private static long uniqueSetCount = 0;
-	private static String chesspieces;
-	private static HashSet<String> solutions = new HashSet<String>();
-	private static HashSet<String> uniquePermutations = new HashSet<String>();
+	private static int chesspieceIndex = 0;
+	private static ChessPiece chesspiece;
+	private static int unique = 0;
+	private static int M;
+	private static int N;
+	private static ChessPiece[] chesspieces;
+	private static Set<String> uniqueChessPermutations = new HashSet<String>();
 
 	public static void main(String[] args)
 	{
-		long startTime = System.currentTimeMillis();
-		chesspieces = "QQKKBBN";
-		size = 7;
-		permutation(chesspieces);
-		int counter = 0;
-		for (String permutation : uniquePermutations)
+		Scanner scanner = new Scanner(System.in);
+		M = scanner.nextInt();
+		N = scanner.nextInt();
+		String chesspiecesSet = scanner.next();
+		
+		chesspieces = new ChessPiece[chesspiecesSet.length()];
+		for (int i = 0; i < chesspiecesSet.length(); i++)
 		{
-			counter++;
-			chesspieces = permutation;
-			calculatePositions(0, 0, 0, new Boolean[size][size]);
+			chesspieces[i] = new ChessPiece();
+		}
+		
+		long startTime = System.currentTimeMillis();
+		permutation("", chesspiecesSet);
+		for (String permutation : uniqueChessPermutations)
+		{
+			calculate(permutation);
+		}
+		long endTime = System.currentTimeMillis();
+		System.out.printf("[solution count] = %s; ", unique);
+		System.out.printf("[time] = %.3f sec%n", (endTime - startTime) / 1000D);
+	}
+
+	private static void calculate(String set)
+	{
+		for (int i = 0; i < chesspieces.length; i++)
+		{
+			chesspieces[i].setChesspieceType(set.charAt(i));
 		}
 
-		long endTime = System.currentTimeMillis();
-		System.out.printf("[solution count] = %s %n", solutions.size());
-		System.out.printf("[time] = %.3f sec", (endTime - startTime) / 1000D);
-	}
-	
-	static void calculatePositions(int row, int column, int chessPieceIndex, Boolean[][] board)
-	{
-		char chesspiece;
-		boolean validation = false, isMarked;
-		Boolean[][] chessboard = new Boolean[board.length][];
-		Utils.copyChessboard(board, chessboard);
-		
-		if ((row < size || column < size) && chessPieceIndex == size) chessPieceIndex--;
-		if (column == chessboard.length) row++;
+		Boolean[][] board = new Boolean[M][N];
 
-		for (; row < chessboard.length; row++)
+		for (int row = 0, column; row < M; row++)
 		{
-			if (column == chessboard.length) column = 0;
-			for (; column < chessboard.length; column++)
+			column = (chesspieces[chesspieceIndex].getColumn() != -1) ? (chesspieces[chesspieceIndex].getColumn() + 1) : 0;
+			if (chesspieces[chesspieceIndex].getColumn() == N - 1)
 			{
-				if (chessboard[row][column] == null && 
-					chessPieceIndex < chesspieces.length())
+				chesspieces[chesspieceIndex].setColumn(-1);
+			}
+			for (; column < N; column++)
+			{
+				if (board[row][column] == null)
 				{
-					isMarked = false;
-					chesspiece = chesspieces.charAt(chessPieceIndex);
-					switch (chesspiece)
+					chesspiece = chesspieces[chesspieceIndex];
+					switch(chesspiece.getChesspieceType())
 					{
-						case 'Q':
-							if (!Utils.checkQueenFields(row, column, chessboard, chesspiece)) break;
-							
-							calculatePositions(row, (validation ? column : column + 1), chessPieceIndex, chessboard);
-							
-							if (Utils.markQueenFields(row, column, chessboard, chesspiece)) 
+						case 'B':
+							if (chesspieceIndex == chesspieces.length - 1)
 							{
-								isMarked = true;
-								chessPieceIndex++;
+								if (TestUtils.checkBishopFields(row, column, board, chesspiece.getChesspieceType()))
+								{
+									unique++;
+								}
+							}
+							else if (TestUtils.markBishopFields(row, column, board, chesspiece.getChesspieceType()))
+							{
+								saveChesspieceCoordiantes(row, column);
+								chesspieceIndex++;
+							}
+							else
+							{
+								chesspiece.setColumn(-1);
 							}
 							break;
 						case 'K':
-							if (!Utils.checkKingFields(row, column, chessboard)) break;
-							
-							calculatePositions(row, (validation ? column : column + 1), chessPieceIndex, chessboard);
-							
-							if (Utils.markKingFields(row, column, chessboard)) 
+							if (chesspieceIndex == chesspieces.length - 1)
 							{
-								isMarked = true;
-								chessPieceIndex++;
+								if (TestUtils.checkKingFields(row, column, board))
+								{
+									unique++;
+								}
 							}
-							break;
-						case 'B':
-							if (!Utils.checkBishopFields(row, column, chessboard, chesspiece)) break;
-							
-							calculatePositions(row, (validation ? column : column + 1), chessPieceIndex, chessboard);
-							
-							if (Utils.markBishopFields(row, column, chessboard, chesspiece)) 
+							else if (TestUtils.markKingFields(row, column, board))
 							{
-								isMarked = true;
-								chessPieceIndex++;
+								saveChesspieceCoordiantes(row, column);
+								chesspieceIndex++;
 							}
-							break;
-						case 'R':
-							if (!Utils.checkRookFields(row, column, chessboard)) break;
-									
-							calculatePositions(row, (validation ? column : column + 1), chessPieceIndex, chessboard);
-							
-							if (Utils.markRookFields(row, column, chessboard)) 
+							else
 							{
-								isMarked = true;
-								chessPieceIndex++;
+								chesspiece.setColumn(-1);
 							}
 							break;
 						case 'N':
-							if (!Utils.checkKnightFields(row, column, chessboard)) break;
-							
-							calculatePositions(row, (validation ? column : column + 1), chessPieceIndex, chessboard);
-							
-							if (Utils.markKnightFields(row, column, chessboard)) 
+							if (chesspieceIndex == chesspieces.length - 1)
 							{
-								isMarked = true;
-								chessPieceIndex++;
+								if (TestUtils.checkKnightFields(row, column, board))
+								{
+									unique++;
+								}
+							}
+							else if (TestUtils.markKnightFields(row, column, board))
+							{
+								saveChesspieceCoordiantes(row, column);
+								chesspieceIndex++;
+							}
+							else
+							{
+								chesspiece.setColumn(-1);
+							}
+							break;
+						case 'Q':
+							if (chesspieceIndex == chesspieces.length - 1)
+							{
+								if (TestUtils.checkQueenFields(row, column, board, chesspiece.getChesspieceType()))
+								{
+									unique++;
+								}
+							}
+							else if (TestUtils.markQueenFields(row, column, board, chesspiece.getChesspieceType()))
+							{
+								saveChesspieceCoordiantes(row, column);
+								chesspieceIndex++;
+							}
+							else
+							{
+								chesspiece.setColumn(-1);
+							}
+							break;
+						case 'R':
+							if (chesspieceIndex == chesspieces.length - 1)
+							{
+								if (TestUtils.checkRookFields(row, column, board))
+								{
+									unique++;
+								}
+							}
+							else if (TestUtils.markRookFields(row, column, board))
+							{
+								saveChesspieceCoordiantes(row, column);
+								chesspieceIndex++;
+							}
+							else
+							{
+								chesspiece.setColumn(-1);
 							}
 							break;
 					}
-					if (isMarked)
+				}
+				else
+				{
+					chesspieces[chesspieceIndex].setColumn(-1);
+				}
+			}
+			if (row == M - 1)
+			{
+				--chesspieceIndex;
+				if (chesspieceIndex < 0) 
+				{
+					chesspieceIndex = 0;
+					break;
+				}
+				row = chesspieces[chesspieceIndex].getRow() - 1;
+				board = new Boolean[M][N];
+				for (int piece = 0; piece < chesspieceIndex; piece++)
+				{
+					chesspiece = chesspieces[piece];
+					switch(chesspiece.getChesspieceType())
 					{
-						check4UniqueSet(chessPieceIndex, chessboard);
+						case 'B': TestUtils.fillBishop(chesspiece.getRow(), chesspiece.getColumn(), board, chesspiece.getChesspieceType()); break;
+						case 'K': TestUtils.fillKing(chesspiece.getRow(), chesspiece.getColumn(), board); break;
+						case 'N': TestUtils.fillKnight(chesspiece.getRow(), chesspiece.getColumn(), board); break;
+						case 'R': TestUtils.fillRook(chesspiece.getRow(), chesspiece.getColumn(), board); break;
+						case 'Q': TestUtils.fillQueen(chesspiece.getRow(), chesspiece.getColumn(), board, chesspiece.getChesspieceType()); break;
 					}
 				}
-				else validation = true;
 			}
 		}
 	}
-
-	private static void check4UniqueSet(int chessPieceIndex, Boolean[][] chessboard)
+	private static void saveChesspieceCoordiantes(int row, int column)
 	{
-		if (chessPieceIndex == chesspieces.length()) 
-		{
-			solutions.add(Utils.getUniqueSet(chessboard, chesspieces));
-			uniqueSetCount++;
-		}
-	}
-
-	public static void permutation(String str)
-	{
-		permutation("", str);
+		chesspiece.setRow(row);
+		chesspiece.setColumn(column);
 	}
 
 	private static void permutation(String prefix, String str)
@@ -136,14 +194,48 @@ public class ChessPieces
 		int n = str.length();
 		if (n == 0)
 		{
-			uniquePermutations.add(prefix);
+			uniqueChessPermutations.add(prefix);
 		}
-		else 
+		else
 		{
 			for (int i = 0; i < n; i++)
 			{
 				permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n));
 			}
 		}
+	}
+}
+
+class ChessPiece
+{
+	private char chesspieceType;
+	private int row;
+	private int column;
+
+	void setChesspieceType(char chesspieceType)
+	{
+		this.chesspieceType = chesspieceType;
+		setRow(-1);
+		setColumn(-1);
+	}
+	char getChesspieceType()
+	{
+		return this.chesspieceType;
+	}
+	void setRow(int row)
+	{
+		this.row = row;
+	}
+	int getRow()
+	{
+		return this.row;
+	}
+	void setColumn(int column)
+	{
+		this.column = column;
+	}
+	int getColumn()
+	{
+		return this.column;
 	}
 }

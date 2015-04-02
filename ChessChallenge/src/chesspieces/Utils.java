@@ -4,19 +4,18 @@ public class Utils
 {
 	private static int rowBuffer;
 	private static int columnBuffer;
-	
+
 	public static boolean checkQueenFields(int row, int column, Boolean[][] board, char chesspiece)
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillBishopStraightDiagonal(row, column, chessboard) ||
-			!Utils.fillBishopBackDiagonal(row, column, chessboard, chesspiece) ||
-			!Utils.fillRookColumn(row, column, chessboard) ||
-			!Utils.fillRookRow(row, column, chessboard))
+		if (!TestUtils.fillBishopStraightDiagonal(row, column, chessboard) ||
+			!TestUtils.fillBishopBackDiagonal(row, column, chessboard, chesspiece) ||
+			!TestUtils.fillRookColumn(row, column, chessboard) ||
+			!TestUtils.fillRookRow(row, column, chessboard))
 		{
 			return false;
 		}
-
 		return true;
 	}
 
@@ -24,11 +23,10 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillKingNeighbours(row, column, chessboard))
+		if (!TestUtils.fillKingNeighbours(row, column, chessboard))
 		{
 			return false;
 		}
-
 		return true;
 	}
 
@@ -36,12 +34,11 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillBishopStraightDiagonal(row, column, chessboard) ||
-			!Utils.fillBishopBackDiagonal(row, column, chessboard, chesspiece))
+		if (!TestUtils.fillBishopStraightDiagonal(row, column, chessboard) ||
+			!TestUtils.fillBishopBackDiagonal(row, column, chessboard, chesspiece))
 		{
 			return false;
 		}
-
 		return true;
 	}
 
@@ -49,12 +46,11 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillRookColumn(row, column, chessboard) ||
-			!Utils.fillRookRow(row, column, chessboard))
+		if (!TestUtils.fillRookColumn(row, column, chessboard) ||
+			!TestUtils.fillRookRow(row, column, chessboard))
 		{
 			return false;
 		}
-
 		return true;
 	}
 
@@ -62,25 +58,24 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillKnightMoveUp(row, column, chessboard) ||
-			!Utils.fillKnightMoveRight(row, column, chessboard) ||
-			!Utils.fillKnightMoveDown(row, column, chessboard) ||
-			!Utils.fillKnightMoveLeft(row, column, chessboard))
+		if (!TestUtils.fillKnightMoveUp(row, column, chessboard) ||
+			!TestUtils.fillKnightMoveRight(row, column, chessboard) ||
+			!TestUtils.fillKnightMoveDown(row, column, chessboard) ||
+			!TestUtils.fillKnightMoveLeft(row, column, chessboard))
 		{
 			return false;
 		}
-		
 		return true;
 	}
-	
+
 	public static boolean markQueenFields(int row, int column, Boolean[][] board, char chesspiece)
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillBishopStraightDiagonal(row, column, chessboard) ||
-			!Utils.fillBishopBackDiagonal(row, column, chessboard, chesspiece) ||
-			!Utils.fillRookColumn(row, column, chessboard) ||
-			!Utils.fillRookRow(row, column, chessboard))
+		if (!TestUtils.fillBishopStraightDiagonal(row, column, chessboard) ||
+			!TestUtils.fillBishopBackDiagonal(row, column, chessboard, chesspiece) ||
+			!TestUtils.fillRookColumn(row, column, chessboard) ||
+			!TestUtils.fillRookRow(row, column, chessboard))
 		{
 			return false;
 		}
@@ -92,7 +87,7 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillKingNeighbours(row, column, chessboard))
+		if (!TestUtils.fillKingNeighbours(row, column, chessboard))
 		{
 			return false;
 		}
@@ -104,8 +99,8 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillBishopStraightDiagonal(row, column, chessboard) ||
-			!Utils.fillBishopBackDiagonal(row, column, chessboard, chesspiece))
+		if (!TestUtils.fillBishopStraightDiagonal(row, column, chessboard) ||
+			!TestUtils.fillBishopBackDiagonal(row, column, chessboard, chesspiece))
 		{
 			return false;
 		}
@@ -117,8 +112,8 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillRookColumn(row, column, chessboard) ||
-			!Utils.fillRookRow(row, column, chessboard))
+		if (!TestUtils.fillRookColumn(row, column, chessboard) ||
+			!TestUtils.fillRookRow(row, column, chessboard))
 		{
 			return false;
 		}
@@ -130,10 +125,10 @@ public class Utils
 	{
 		Boolean[][] chessboard = new Boolean[board.length][];
 		copyChessboard(board, chessboard);
-		if (!Utils.fillKnightMoveUp(row, column, chessboard) ||
-			!Utils.fillKnightMoveRight(row, column, chessboard) ||
-			!Utils.fillKnightMoveDown(row, column, chessboard) ||
-			!Utils.fillKnightMoveLeft(row, column, chessboard))
+		if (!TestUtils.fillKnightMoveUp(row, column, chessboard) ||
+			!TestUtils.fillKnightMoveRight(row, column, chessboard) ||
+			!TestUtils.fillKnightMoveDown(row, column, chessboard) ||
+			!TestUtils.fillKnightMoveLeft(row, column, chessboard))
 		{
 			return false;
 		}
@@ -151,7 +146,7 @@ public class Utils
 		}
 	}
 
-	private static boolean fillBishopStraightDiagonal(int row, int column, Boolean[][] chessboard)
+	public static boolean fillBishopStraightDiagonal(int row, int column, Boolean[][] chessboard)
 	{
 		if (row > column)
 		{
@@ -180,7 +175,7 @@ public class Utils
 		return true;
 	}
 
-	private static boolean fillBishopBackDiagonal(int row, int column, Boolean[][] chessboard, char chesspiece)
+	public static boolean fillBishopBackDiagonal(int row, int column, Boolean[][] chessboard, char chesspiece)
 	{
 		rowBuffer = row;
 		columnBuffer = column;
@@ -188,13 +183,13 @@ public class Utils
 		{
 			row = (row - (chessboard[0].length - 1 - column));
 			column = chessboard[0].length - 1;
-		} 
+		}
 		else
 		{
 			column = row + column;
 			row = 0;
 		}
-		while (row < chessboard.length && column >= 0)
+		while (row < chessboard.length && column >= 0) 
 		{
 			if (chessboard[row][column] == null ||
 				chessboard[row][column] != true)
@@ -220,8 +215,7 @@ public class Utils
 		row = 0;
 		while (row < chessboard.length)
 		{
-			if (chessboard[row][column] == null ||
-				chessboard[row][column] != true)
+			if (chessboard[row][column] == null || chessboard[row][column] != true)
 			{
 				chessboard[row][column] = false;
 			}
@@ -434,7 +428,7 @@ public class Utils
 		return true;
 	}
 
-	private static boolean fillKnightMoveUp(int row, int column, Boolean[][] chessboard)
+	public static boolean fillKnightMoveUp(int row, int column, Boolean[][] chessboard)
 	{
 		rowBuffer = row;
 		columnBuffer = column;
@@ -481,7 +475,7 @@ public class Utils
 		return true;
 	}
 
-	private static boolean fillKnightMoveRight(int row, int column, Boolean[][] chessboard)
+	public static boolean fillKnightMoveRight(int row, int column, Boolean[][] chessboard)
 	{
 		rowBuffer = row;
 		columnBuffer = column;
@@ -505,7 +499,9 @@ public class Utils
 					chessboard[row - 1][column + 2] != true)
 				{
 					chessboard[row - 1][column + 2] = false;
-				} else {
+				}
+				else
+				{
 					return false;
 				}
 			}
@@ -526,13 +522,14 @@ public class Utils
 		return true;
 	}
 
-	private static boolean fillKnightMoveDown(int row, int column, Boolean[][] chessboard)
+	public static boolean fillKnightMoveDown(int row, int column, Boolean[][] chessboard)
 	{
 		rowBuffer = row;
 		columnBuffer = column;
 		if (row < chessboard.length - 2)
 		{
-			if (column == 0) {
+			if (column == 0)
+			{
 				if (chessboard[row + 2][column + 1] == null ||
 					chessboard[row + 2][column + 1] != true)
 				{
@@ -572,7 +569,7 @@ public class Utils
 		return true;
 	}
 
-	private static boolean fillKnightMoveLeft(int row, int column, Boolean[][] chessboard)
+	public static boolean fillKnightMoveLeft(int row, int column, Boolean[][] chessboard)
 	{
 		rowBuffer = row;
 		columnBuffer = column;
@@ -609,7 +606,7 @@ public class Utils
 				{
 					chessboard[row + 1][column - 2] = false;
 					chessboard[row - 1][column - 2] = false;
-				} 
+				}
 				else
 				{
 					return false;
@@ -620,28 +617,31 @@ public class Utils
 		return true;
 	}
 
-	public static void printChessboard(Boolean[][] chessboard, String piecesSet)
+	public static void printChessboard(Boolean[][] chessboard, ChessPiece[] piecesSet) 
 	{
 		int index = 0;
-		for (int row = 0, column; row < chessboard.length; row++)
+		for (int row = 0, column; row < chessboard.length; row++) 
 		{
-			for (column = 0; column < chessboard.length; column++)
+			for (column = 0; column < chessboard.length; column++) 
 			{
 				if (chessboard[row][column] == null)
+				{
 					System.out.print('\u006F' + " ");
+				}
 				else if (!chessboard[row][column])
+				{
 					System.out.print('\u0078' + " ");
+				}
 				else
 				{
-					System.out.print(piecesSet.charAt(index) + " ");
+					System.out.print(piecesSet[index].getChesspieceType() + " ");
 					index++;
 				}
 			}
 			System.out.println();
 		}
 	}
-	
-	public static String getUniqueSet(Boolean[][] chessboard, String piecesSet)
+	public static String getUniqueSet(Boolean[][] chessboard, ChessPiece[] piecesSet)
 	{
 		StringBuilder sb = new StringBuilder();
 		int index = 0;
@@ -650,18 +650,51 @@ public class Utils
 			for (column = 0; column < chessboard.length; column++)
 			{
 				if (chessboard[row][column] == null)
-					sb.append('\u006F' + " ");
-				else if (!chessboard[row][column])
+				{
 					sb.append('\u0078' + " ");
+//					sb.append('\u006F' + " ");
+				}
+				else if (!chessboard[row][column])
+				{
+					sb.append('\u0078' + " ");
+				}
 				else
 				{
-					sb.append(piecesSet.charAt(index) + " ");
+					sb.append(piecesSet[index].getChesspieceType() + " ");
 					index++;
 				}
 			}
 			sb.append('\n');
 		}
-		
 		return sb.toString();
+	}
+
+	public static void fillQueen(int row, int column, Boolean[][] chessboard, char chesspiece)
+	{
+		fillBishopStraightDiagonal(row, column, chessboard);
+		fillBishopBackDiagonal(row, column, chessboard, chesspiece);
+		fillRookColumn(row, column, chessboard);
+		fillRookRow(row, column, chessboard);
+	}
+	public static void fillBishop(int row, int column, Boolean[][] chessboard, char chesspiece)
+	{
+		fillBishopStraightDiagonal(row, column, chessboard);
+		fillBishopBackDiagonal(row, column, chessboard, chesspiece);
+	}
+	public static void fillRook(int row, int column, Boolean[][] chessboard)
+	{
+		fillRookColumn(row, column, chessboard);
+		fillRookRow(row, column, chessboard);
+	}
+	public static void fillKing(int row, int column, Boolean[][] chessboard)
+	{
+		fillKingNeighbours(row, column, chessboard);
+	}
+	public static void fillKnight(int row, int column, Boolean[][] chessboard)
+	{
+		fillKnightMoveDown(row, column, chessboard);
+		fillKnightMoveLeft(row, column, chessboard);
+		fillKnightMoveRight(row, column, chessboard);
+		fillKnightMoveUp(row, column, chessboard);
 	}
 }
