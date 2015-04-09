@@ -1,7 +1,6 @@
 package chesspieces;
 
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 public class ChessPiecesUniqueCombinations
@@ -20,7 +19,7 @@ public class ChessPiecesUniqueCombinations
 	public static void main(String[] args)
 	{
 		long startTime = System.currentTimeMillis();
-		readInput();
+		readInput(args);
 		
 		chessPieces = new ChessPiece[chessPiecesInitialSet.length()];
 		for (int i = 0; i < chessPiecesInitialSet.length(); i++)
@@ -40,13 +39,11 @@ public class ChessPiecesUniqueCombinations
 		printResult(startTime, endTime);
 	}
 	
-	private static void readInput()
+	private static void readInput(String[] args)
 	{
-		Scanner scanner = new Scanner(System.in);
-		M = scanner.nextInt();
-		N = scanner.nextInt();
-		chessPiecesInitialSet = scanner.next();
-		scanner.close();
+		M = Integer.parseInt(args[0]);
+		N = Integer.parseInt(args[1]);
+		chessPiecesInitialSet = args[2];
 	}
 
 	private static void generateChessPiecesPermutations(String prefix, String str)
